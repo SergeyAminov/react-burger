@@ -1,0 +1,52 @@
+.navbar{
+    width: 1280px;
+    height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menuButtons{
+    display: flex;
+    justify-content: center;
+}
+
+.menuButton{
+    height: 56px;
+    padding: 16px 20px 16px 20px;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    display: flex;
+    align-items: center;
+    font-family: 'JetBrains Mono';
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.menuButtonActive{
+    color: #F2F2F3;
+}
+
+.menuButton svg{
+    margin-right: 8px;
+}
+
+.orderFeed{
+    color: #8585AD;
+}
+
+.profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 210px;
+    font-family: 'JetBrains Mono';
+    font-weight: 400;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+}
+
+.profile svg{
+    margin-right: 11px;
+}
