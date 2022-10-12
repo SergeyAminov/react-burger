@@ -1,13 +1,13 @@
 import React from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredinets';
-import Navbar from '../nav/navbar';
+import AppHeader from '../app-header/app-header';
 import appStyle from './App.module.css';
 
 function App() {
   return (
     <div className={appStyle.App}>
       <header className={appStyle.header}>
-          <Navbar/>
+          <AppHeader/>
       </header>
       <main>
           <BurgerIngredients/>
