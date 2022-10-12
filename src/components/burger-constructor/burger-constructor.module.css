@@ -1,0 +1,46 @@
+.constructorWrapper{
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.constructor{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.lockedElementWrapper{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    width:536px;
+    height: 80px;
+}
+
+.elementWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width:568px;
+    height: 80px;
+}
+
+.order{
+    width: 568px;
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.total{
+    display: flex;
+    align-items: center;
+    font-family: "Iceland";
+    font-weight: 400;
+    font-size: 48px;
+}
