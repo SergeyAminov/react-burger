@@ -1,5 +1,4 @@
-import React from 'react';
-import BurgerIngredients from '../burger-ingredients/burger-ingredinets';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import AppHeader from '../app-header/app-header';
 import appStyle from './App.module.css';
 
