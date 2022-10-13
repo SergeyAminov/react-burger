@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 import data from "../../utils/data";
 import Ingredient from "../ingredient/ingredient";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -31,25 +32,29 @@ export default function IngredientList(props){
         <div className={ingredientListStyle.list}>
             <h4 className={`${ingredientListStyle.ingredientTitle} mb-6 mt-10` }>Булки</h4>
             {
-                bunList.map((data, index) => {
+                bunList.map((data) => {
                     if (data.name === "Краторная булка N-200i")
-                        return <Ingredient key={index} name={data.name} image={data.image} price={data.price} count={1}/>
-                    return <Ingredient key={index} name={data.name} image={data.image} price={data.price} count={props.count}/>
+                        return <Ingredient key={data._id} data={data} count={1}/>
+                    return <Ingredient key={data._id} data={data} count={props.count}/>
                 })
             }
             <h4 className={`${ingredientListStyle.ingredientTitle} mb-6 mt-10` }>Соусы</h4>
             {
-                sauceList.map((data, index) => {
-                    return <Ingredient key={index} name={data.name} image={data.image} price={data.price} count={props.count}/>
+                sauceList.map((data) => {
+                    return <Ingredient key={data._id} data={data} count={props.count}/>
                 })
             }
             <h4 className={`${ingredientListStyle.ingredientTitle} mb-6 mt-10` }>Начинки</h4>
             {
-                mainList.map((data, index) => {
-                    return <Ingredient key={index} name={data.name} image={data.image} price={data.price} count={props.count}/>
+                mainList.map((data) => {
+                    return <Ingredient key={data._id} data={data} count={props.count}/>
                 })
             }
         </div>
         </>
     );
 }
+
+IngredientList.propTypes = {
+    count: PropTypes.number
+};

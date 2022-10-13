@@ -9,7 +9,7 @@ export default function BurgerIngredients(){
 
     return(
         <div className={`${burgerIngredientsStyle.burgerIngredient} mr-10`}>
-            <h3 className="mt-10 mb-5">Соберите бургер</h3>
+            <h1 className="mt-10 mb-5">Соберите бургер</h1>
             <IngredientList/>
         </div>
     );

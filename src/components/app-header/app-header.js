@@ -5,28 +5,30 @@ import appHeaderStyle from "./app-header.module.css";
 
 export default function AppHeader(){
     return(
-        <div className={appHeaderStyle.navbar}>
+        <header className={appHeaderStyle.header}>
+            <div className={appHeaderStyle.navbar}>
 
-            <div className={appHeaderStyle.menuButtons}>
-                <button className={`${appHeaderStyle.menuButton} ${appHeaderStyle.menuButtonActive}`}>
-                    <BurgerIcon type="primary"/>
-                    Конструктор
-                </button>
+                <div className={appHeaderStyle.menuButtons}>
+                    <button className={`${appHeaderStyle.menuButton} ${appHeaderStyle.menuButtonActive}`}>
+                        <BurgerIcon type="primary"/>
+                        Конструктор
+                    </button>
 
-                <button className={appHeaderStyle.menuButton}>
-                    <MenuIcon type="secondary"/>
-                    <span className={appHeaderStyle.orderFeed}>Лента заказов</span>
+                    <button className={appHeaderStyle.menuButton}>
+                        <MenuIcon type="secondary"/>
+                        <span className={appHeaderStyle.orderFeed}>Лента заказов</span>
+                    </button>
+                </div>
+
+                <div className={appHeaderStyle.logo}>
+                    <Logo/>
+                </div>
+                
+                <button className={appHeaderStyle.profile}>
+                    <ProfileIcon type="secondary" />
+                    <span className={appHeaderStyle.orderFeed}>Личный кабинет</span>
                 </button>
             </div>
-
-            <div className={appHeaderStyle.logo}>
-                <Logo/>
-            </div>
-            
-            <button className={appHeaderStyle.profile}>
-                <ProfileIcon type="secondary" />
-                <span className={appHeaderStyle.orderFeed}>Личный кабинет</span>
-            </button>
-        </div>
+        </header>
     );
 }

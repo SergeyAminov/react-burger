@@ -6,14 +6,18 @@ import ingredients from "../../utils/data";
 export default function BurgerConstructor(){
 
   const lockedIngredient = ingredients[0];
-  const total = lockedIngredient.price * 3;
+  const ingredientList = [ingredients[3], ingredients[4], ingredients[7], ingredients[8],
+  ingredients[8], ingredients[10], ingredients[11], ingredients[12]];
+  
+  let total = lockedIngredient.price * 2; 
+  ingredientList.forEach(ingredient => total+=ingredient.price);
 
   return (
     <div className={`${constructorStyle.constructorWrapper} mt-25`}>
       
       {/* Конструктор */}
 
-      <div className={`${constructorStyle.constructor}`}>
+      <div className={`${constructorStyle.constructor} ml-4`}>
         <div className={`${constructorStyle.lockedElementWrapper} mr-4`}>
           <ConstructorElement
             type="top"
@@ -24,14 +28,18 @@ export default function BurgerConstructor(){
           />
         </div>
         
-        <div className={constructorStyle.elementWrapper}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={lockedIngredient.name}
-            price={lockedIngredient.price}
-            thumbnail={lockedIngredient.image}
-          />
-        </div>
+        {
+          ingredientList.map((ingredient, index) => {
+            return <div key={index} className={constructorStyle.elementWrapper}>
+                      <DragIcon type="primary" />
+                      <ConstructorElement
+                        text={ingredient.name}
+                        price={ingredient.price}
+                        thumbnail={ingredient.image}
+                      />
+                    </div>
+          })
+        }
 
         <div className={`${constructorStyle.lockedElementWrapper} mr-4`}>
           <ConstructorElement
