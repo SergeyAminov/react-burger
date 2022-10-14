@@ -1,5 +1,6 @@
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
+import ingredientType from "../../utils/types";
 
 import ingredientStyle from "./ingredient.module.css";
 
@@ -19,18 +20,5 @@ export default function Ingredient({data}){
 }
 
 Ingredient.propTypes = {
-    data: PropTypes.exact({
-        _id: PropTypes.string,
-        name: PropTypes.string,
-        type: PropTypes.string,
-        proteins: PropTypes.number,
-        fat: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        calories: PropTypes.number,
-        price: PropTypes.number,
-        image: PropTypes.string,
-        image_mobile: PropTypes.string,
-        image_large: PropTypes.string,
-        __v: PropTypes.number
-    }).isRequired
+    data: PropTypes.exact(ingredientType).isRequired
 }

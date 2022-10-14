@@ -28,18 +28,20 @@ export default function BurgerConstructor(){
           />
         </div>
         
-        {
-          ingredientList.map((ingredient, index) => {
-            return <div key={index} className={constructorStyle.elementWrapper}>
-                      <DragIcon type="primary" />
-                      <ConstructorElement
-                        text={ingredient.name}
-                        price={ingredient.price}
-                        thumbnail={ingredient.image}
-                      />
-                    </div>
-          })
-        }
+        <div className={constructorStyle.movableItems}>
+          {
+            ingredientList.map((ingredient, index) => {
+              return <div key={index} className={constructorStyle.elementWrapper}>
+                        <DragIcon type="primary" />
+                        <ConstructorElement
+                          text={ingredient.name}
+                          price={ingredient.price}
+                          thumbnail={ingredient.image}
+                        />
+                      </div>
+            })
+          }
+        </div>
 
         <div className={`${constructorStyle.lockedElementWrapper} mr-4`}>
           <ConstructorElement
