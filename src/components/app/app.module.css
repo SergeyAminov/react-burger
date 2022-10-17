@@ -6,3 +6,9 @@ main{
   display: flex;
   justify-content: center;
 }
+
+.info{
+  font-family: "Iceland";
+  font-weight: 400;
+  font-size: 24px;
+}

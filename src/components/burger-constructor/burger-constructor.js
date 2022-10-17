@@ -1,14 +1,13 @@
 import constructorStyle from "./burger-constructor.module.css";
+import PropTypes from 'prop-types';
+import ingredientType from "../../utils/types";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import ingredients from "../../utils/data";
-
-export default function BurgerConstructor(){
+export default function BurgerConstructor({ingredients}){
 
   const lockedIngredient = ingredients[0];
   const ingredientList = [ingredients[3], ingredients[4], ingredients[7], ingredients[8],
-  ingredients[8], ingredients[10], ingredients[11], ingredients[12]];
-  
+    ingredients[8], ingredients[10], ingredients[11], ingredients[12]];
   let total = lockedIngredient.price * 2; 
   ingredientList.forEach(ingredient => total+=ingredient.price);
 
@@ -68,3 +67,7 @@ export default function BurgerConstructor(){
     </div>
   );
 }
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired
+};
