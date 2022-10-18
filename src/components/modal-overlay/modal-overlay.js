@@ -6,20 +6,22 @@ import Modal from '../modal/modal';
 
 const modalRoot = document.getElementById("modals");
 
-export default function ModalOverlay({show, closeModal, children}){
+export default function ModalOverlay({isShowModal, handleCloseModal, children}){
 
     useEffect(() => {
         let modal = document.getElementById("overlay");
-        
-        if (show) modal.style.display = "block";
-        else modal.style.display = "none";
 
-        window.onclick = (evt) => { if (evt.target === modal) closeModal() };
+        /*
+        if (isShowModal) modal.style.display = "block";
+        else modal.style.display = "none";
+        */
+
+        window.onclick = (evt) => { if (evt.target === modal) handleCloseModal() };
     });
 
     return ReactDOM.createPortal(
         <div id="overlay" className={modalOverlayStyle.overlay}>
-            <Modal closeModal={closeModal}>
+            <Modal closeModal={handleCloseModal}>
                 {children}
             </Modal>
         </div>,
@@ -28,7 +30,7 @@ export default function ModalOverlay({show, closeModal, children}){
 }
 
 ModalOverlay.propTypes = {
-    show: PropTypes.bool.isRequired,
-    closeModal: PropTypes.func.isRequired,
+    isShowModal: PropTypes.bool.isRequired,
+    handleCloseModal: PropTypes.func.isRequired,
     children: PropTypes.element
 }

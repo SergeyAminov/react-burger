@@ -6,6 +6,10 @@
     position: relative;
 }
 
+.ingredient:hover{
+    cursor: pointer;
+}
+
 .img{
     width: 240px;
     height: 120px;

@@ -1,15 +1,24 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import AppHeader from '../app-header/app-header';
 import appStyle from './app.module.css';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 function App() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [hasError, setHasError] = React.useState(false);
-  const [data, setData] = React.useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [data, setData] = useState([]);
+  const [isShowModal, setIsShowModal] = useState(false);
+  
+  function handleOpenModal(){
+    setIsShowModal(true);
+  }
 
-  React.useEffect(() => {
+  function handleCloseModal(){
+    setIsShowModal(false);
+  }
+
+  useEffect(() => {
     const getIngredients = async () => {
       try {
         setIsLoading(true);
@@ -32,8 +41,22 @@ function App() {
       <main>
           {isLoading && <span className={`${appStyle.info} mt-2`}>Загрузка...</span>}
           {hasError && <span className={`${appStyle.info} mt-2`}>Произошла ошибка</span>}
-          {!isLoading && !hasError && data.length && <BurgerIngredients ingredients={data}/>}
-          {!isLoading && !hasError && data.length && <BurgerConstructor ingredients={data}/>}
+          {
+            !isLoading && !hasError && data.length && 
+            <BurgerIngredients
+              ingredients={data}
+              isShowModal={isShowModal}
+              handleOpenModal={handleOpenModal}
+              handleCloseModal={handleCloseModal}/>
+          }
+          {
+            !isLoading && !hasError && data.length && 
+            <BurgerConstructor 
+              ingredients={data}
+              isShowModal={isShowModal}
+              handleOpenModal={handleOpenModal}
+              handleCloseModal={handleCloseModal}/>
+          }
       </main>
     </div>
   );

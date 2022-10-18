@@ -12,19 +12,19 @@
 }
 
 .close {
-position: absolute;
-top: 0;
-right: 0;
-color: #F2F2F3;
-font-size: 28px;
-font-weight: bold;
-z-index: 3;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #F2F2F3;
+    font-size: 28px;
+    font-weight: bold;
+    z-index: 3;
 }
 
 .close:hover,
 .close:focus {
-color: white;
-text-decoration: none;
-cursor: pointer;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
 }
 
