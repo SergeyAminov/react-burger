@@ -19,13 +19,8 @@
 }
 
 .checkIcon{
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 120px;
     height: 120px;
-    background-color: #8585AD;
-    border-radius: 60px;
 }
 
 .below{

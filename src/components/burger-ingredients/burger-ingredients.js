@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import Ingredient from "../ingredient/ingredient";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import ModalOverlay from '../modal-overlay/modal-overlay';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-
 import PropTypes from 'prop-types';
 import ingredientType from "../../utils/types";
 import burgerIngredientsStyle from "./burger-ingredients.module.css";
@@ -11,15 +8,16 @@ import burgerIngredientsStyle from "./burger-ingredients.module.css";
 /**
  * @description Компонент-обертка для всего перечня ингредиентов бургера. 
  */
-export default function BurgerIngredients({ingredients, isShowModal, handleOpenModal, handleCloseModal}){
+export default function BurgerIngredients({ingredients}){
     const [current, setCurrent] = useState('Булки');
 
     const bunList = ingredients.filter(ingredient => ingredient.type === "bun");
     const mainList = ingredients.filter(ingredient => ingredient.type === "main");
     const sauceList = ingredients.filter(ingredient => ingredient.type === "sauce");
 
-    // Заглушка для количества ингредиентов, отображаемых в списке
-    const count = 0;
+    const modal = (data, count=0) => {
+        return( <Ingredient data={data} count={count}/> );
+    }
     
     return(
         <div className={`${burgerIngredientsStyle.burgerIngredient} mr-10`}>
@@ -41,63 +39,19 @@ export default function BurgerIngredients({ingredients, isShowModal, handleOpenM
                 <h4 className={`${burgerIngredientsStyle.ingredientTitle} mb-6 mt-10` }>Булки</h4>
                 {
                     bunList.map((data) => {
+                        // Заглушка для отображения счетчика с количеством выбранного ингредента
                         if (data.name === "Краторная булка N-200i")
-                            return (
-                                <>
-                                    <Ingredient key={data._id} data={data} count={2} handleOpenModal={handleOpenModal}/>
-                                    {
-                                        isShowModal &&
-                                        <ModalOverlay isShowModal={isShowModal} handleCloseModal={handleCloseModal}>
-                                            <IngredientDetails data={data}/>
-                                        </ModalOverlay>
-                                    }
-                                </>
-                            )
-                        return (
-                            <>
-                                <Ingredient key={data._id} data={data} count={count} handleOpenModal={handleOpenModal}/>
-                                {
-                                    isShowModal &&
-                                    <ModalOverlay isShowModal={isShowModal} handleCloseModal={handleCloseModal}>
-                                        <IngredientDetails data={data}/>
-                                    </ModalOverlay>
-                                }
-                            </>
-                        )
+                            return modal(data, 1);
+                        return modal(data)
                     })
                 }
+
                 <h4 className={`${burgerIngredientsStyle.ingredientTitle} mb-6 mt-10` }>Соусы</h4>
-                {
-                    sauceList.map((data) => {
-                        return (
-                            <>
-                                <Ingredient key={data._id} data={data} count={count} handleOpenModal={handleOpenModal}/>
-                                {
-                                    isShowModal &&
-                                    <ModalOverlay isShowModal={isShowModal} handleCloseModal={handleCloseModal}>
-                                        <IngredientDetails data={data}/>
-                                    </ModalOverlay>
-                                }
-                            </>
-                        )
-                    })
-                }
+                { sauceList.map((data) => { return modal(data) }) }
+                
                 <h4 className={`${burgerIngredientsStyle.ingredientTitle} mb-6 mt-10` }>Начинки</h4>
-                {
-                    mainList.map((data) => {
-                        return (
-                            <>
-                                <Ingredient key={data._id} data={data} count={count} handleOpenModal={handleOpenModal}/>
-                                {
-                                    isShowModal &&
-                                    <ModalOverlay isShowModal={isShowModal} handleCloseModal={handleCloseModal}>
-                                        <IngredientDetails data={data}/>
-                                    </ModalOverlay>
-                                }
-                            </>
-                        )
-                    })
-                }
+                { mainList.map((data) => { return modal(data) }) }
+
             </div>
 
         </div>
@@ -105,8 +59,5 @@ export default function BurgerIngredients({ingredients, isShowModal, handleOpenM
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired,
-    isShowModal: PropTypes.bool.isRequired,
-    handleOpenModal: PropTypes.func.isRequired,
-    handleCloseModal: PropTypes.func.isRequired,
+    ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired
   };

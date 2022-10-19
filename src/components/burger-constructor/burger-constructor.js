@@ -2,10 +2,8 @@ import constructorStyle from "./burger-constructor.module.css";
 import PropTypes from 'prop-types';
 import ingredientType from "../../utils/types";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import ModalOverlay from '../modal-overlay/modal-overlay';
-import OrderDetails from '../order-details/order-details';
 
-export default function BurgerConstructor({ingredients, isShowModal, handleOpenModal, handleCloseModal}){
+export default function BurgerConstructor({ingredients}){
 
   const lockedIngredient = ingredients[0];
   const ingredientList = [ingredients[3], ingredients[4], ingredients[7], ingredients[8],
@@ -62,23 +60,16 @@ export default function BurgerConstructor({ingredients, isShowModal, handleOpenM
           <span className="mr-2">{total}</span>
           <CurrencyIcon type="primary" />
         </span>
-        <Button htmlType="submit" type="primary" size="medium" onClick={handleOpenModal}>
+        
+        <Button htmlType="submit" type="primary" size="medium">
           Оформить заказ
         </Button>
-        {
-          isShowModal &&
-          <ModalOverlay isShowModal={isShowModal} handleCloseModal={handleCloseModal}>
-            <OrderDetails />
-          </ModalOverlay>
-        }
+        
       </div>
     </div>
   );
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired,
-  isShowModal: PropTypes.bool.isRequired,
-  handleOpenModal: PropTypes.func.isRequired,
-  handleCloseModal: PropTypes.func.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired
 };

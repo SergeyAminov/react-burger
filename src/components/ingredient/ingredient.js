@@ -4,10 +4,10 @@ import ingredientType from "../../utils/types";
 
 import ingredientStyle from "./ingredient.module.css";
 
-export default function Ingredient({data, count, handleOpenModal}){
+export default function Ingredient({data, count}){
 
     return(
-        <div className={`${ingredientStyle.ingredient}`} onClick={handleOpenModal}>
+        <div key={data._id} className={`${ingredientStyle.ingredient}`}>
             <img className={ingredientStyle.img} src={data.image} alt={`${data.name}`}/>
             {(count > 0) && <Counter count={count} size="default" />}
             <span className={ingredientStyle.currency}>
@@ -21,6 +21,5 @@ export default function Ingredient({data, count, handleOpenModal}){
 
 Ingredient.propTypes = {
     data: PropTypes.exact(ingredientType).isRequired,
-    count: PropTypes.number,
-    handleOpenModal: PropTypes.func.isRequired
+    count: PropTypes.number
 }

@@ -8,15 +8,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [data, setData] = useState([]);
-  const [isShowModal, setIsShowModal] = useState(false);
-  
-  function handleOpenModal(){
-    setIsShowModal(true);
-  }
-
-  function handleCloseModal(){
-    setIsShowModal(false);
-  }
 
   useEffect(() => {
     const getIngredients = async () => {
@@ -44,18 +35,11 @@ function App() {
           {
             !isLoading && !hasError && data.length && 
             <BurgerIngredients
-              ingredients={data}
-              isShowModal={isShowModal}
-              handleOpenModal={handleOpenModal}
-              handleCloseModal={handleCloseModal}/>
+              ingredients={data}/>
           }
           {
             !isLoading && !hasError && data.length && 
-            <BurgerConstructor 
-              ingredients={data}
-              isShowModal={isShowModal}
-              handleOpenModal={handleOpenModal}
-              handleCloseModal={handleCloseModal}/>
+            <BurgerConstructor ingredients={data}/>
           }
       </main>
     </div>
