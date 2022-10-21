@@ -2,14 +2,22 @@ import constructorStyle from "./burger-constructor.module.css";
 import PropTypes from 'prop-types';
 import ingredientType from "../../utils/types";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/my-modal";
+import OrderDetails from "../order-details/order-details";
 
-export default function BurgerConstructor({ingredients}){
+export default function BurgerConstructor({ingredients, visibleModal, onOpen, onClose}){
 
   const lockedIngredient = ingredients[0];
   const ingredientList = [ingredients[3], ingredients[4], ingredients[7], ingredients[8],
     ingredients[8], ingredients[10], ingredients[11], ingredients[12]];
   let total = lockedIngredient.price * 2; 
   ingredientList.forEach(ingredient => total+=ingredient.price);
+
+  const modal = (
+    <Modal onClose={onClose}>
+      <OrderDetails />
+    </Modal>
+  );
 
   return (
     <div className={`${constructorStyle.constructorWrapper} mt-25`}>
@@ -61,9 +69,10 @@ export default function BurgerConstructor({ingredients}){
           <CurrencyIcon type="primary" />
         </span>
         
-        <Button htmlType="submit" type="primary" size="medium">
+        <Button htmlType="submit" type="primary" size="medium" onClick={onOpen}>
           Оформить заказ
         </Button>
+        {visibleModal && modal}
         
       </div>
     </div>
@@ -71,5 +80,8 @@ export default function BurgerConstructor({ingredients}){
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired
+  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired,
+  visibleModal: PropTypes.bool,
+  onOpen: PropTypes.func,
+  onClose: PropTypes.func
 };

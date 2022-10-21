@@ -5,10 +5,18 @@
 main{
   display: flex;
   justify-content: center;
+  overflow: hidden;
 }
 
 .info{
   font-family: "Iceland";
   font-weight: 400;
   font-size: 24px;
+}
+
+#modals{
+  height: 100%;
+  width: 100%;
+  display: flex;
+
 }

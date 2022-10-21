@@ -4,11 +4,13 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 import ingredientType from "../../utils/types";
 import burgerIngredientsStyle from "./burger-ingredients.module.css";
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/my-modal';
 
 /**
  * @description Компонент-обертка для всего перечня ингредиентов бургера. 
  */
-export default function BurgerIngredients({ingredients}){
+export default function BurgerIngredients({ingredients, visibleModal, onOpen, onClose}){
     const [current, setCurrent] = useState('Булки');
 
     const bunList = ingredients.filter(ingredient => ingredient.type === "bun");
@@ -16,7 +18,17 @@ export default function BurgerIngredients({ingredients}){
     const sauceList = ingredients.filter(ingredient => ingredient.type === "sauce");
 
     const modal = (data, count=0) => {
-        return( <Ingredient data={data} count={count}/> );
+        return(
+            <>
+                <Ingredient onOpen={onOpen} data={data} count={count}/>
+                {
+                    visibleModal && 
+                    <Modal onClose={onClose}>
+                        <IngredientDetails data={data}/>
+                    </Modal>
+                }
+            </>
+        );
     }
     
     return(
@@ -59,5 +71,8 @@ export default function BurgerIngredients({ingredients}){
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired
+    ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired,
+    visibleModal: PropTypes.bool,
+    onOpen: PropTypes.func,
+    onClose: PropTypes.func
   };
