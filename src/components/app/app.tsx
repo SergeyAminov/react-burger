@@ -8,15 +8,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [data, setData] = useState([]);
-  const [visibleModal, setVisibleModal] = useState(false);
-
-  const handleOpenModal = () => {
-    setVisibleModal(true);
-  }
-
-  const handleCloseModal = () => {
-    setVisibleModal(false);
-  }
 
   useEffect(() => {
     const getIngredients = async () => {
@@ -43,19 +34,11 @@ function App() {
           {hasError && <span className={`${appStyle.info} mt-2`}>Произошла ошибка</span>}
           {
             !isLoading && !hasError && data.length && 
-            <BurgerIngredients
-              ingredients={data}
-              visibleModal={visibleModal}
-              onOpen={handleOpenModal}
-              onClose={handleCloseModal}/>
+            <BurgerIngredients ingredients={data}/>
           }
           {
             !isLoading && !hasError && data.length && 
-            <BurgerConstructor 
-              ingredients={data}
-              visibleModal={visibleModal}
-              onOpen={handleOpenModal}
-              onClose={handleCloseModal}/>
+            <BurgerConstructor ingredients={data}/>
           }
       </main>
     </div>

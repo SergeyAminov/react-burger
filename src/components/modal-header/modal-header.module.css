@@ -18,5 +18,11 @@
 }
 
 .header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     width: 580px;
+    font-family: "JetBrains Mono";
+    font-size: 36px;
+    font-weight: 700;
 }

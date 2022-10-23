@@ -5,11 +5,10 @@ import ingredientType from "../../utils/types";
 export default function IngredientDetails({data}){
     return(
         <>
-            <span className={`${ingredientDetailsStyle.title} mt-10`}>Детали ингредиента</span>
             <img className={ingredientDetailsStyle.img} src={data.image} alt={`${data.name}`}/>
             <span className={`${ingredientDetailsStyle.name} mt-4 `}>{data.name}</span>
             
-            <div className={`${ingredientDetailsStyle.nutrition} mt-8`}>
+            <div className={`${ingredientDetailsStyle.nutrition} mt-8 mb-15`}>
                 
                 <div className={ingredientDetailsStyle.nutritionValue}>
                     <span className={ingredientDetailsStyle.nutritionTitle}>Калории, ккал</span>
