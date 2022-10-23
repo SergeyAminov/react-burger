@@ -15,9 +15,11 @@ function App() {
         setIsLoading(true);
         setHasError(false);
         const res = await fetch('https://norma.nomoreparties.space/api/ingredients');
-        const data = await res.json();
-        setData(data.data);
-        setIsLoading(false);
+        if (res.ok){
+          const data = await res.json();
+          setData(data.data);
+          setIsLoading(false);
+        }
       } catch(err) {
         setHasError(true);
       }

@@ -13,6 +13,6 @@ export default function ModalHeader({ children, onClose }){
 }
 
 ModalHeader.propTypes = {
-    children: PropTypes.string,
+    children: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired
 }

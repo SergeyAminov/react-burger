@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Ingredient from "../ingredient/ingredient";
+import Modal from "../modal/my-modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 import ingredientType from "../../utils/types";
@@ -10,17 +12,24 @@ import burgerIngredientsStyle from "./burger-ingredients.module.css";
  */
 export default function BurgerIngredients({ingredients}){
     const [current, setCurrent] = useState('Булки');
+    const [visibleModal, setVisibleModal] = useState(false);
+    const [modalData, setModalData] = useState(null);
+
+    const handleOpenModal = (data) => {
+        setModalData(data);
+        setVisibleModal(true);
+    }
+
+    const handleCloseModal = () => {
+        setVisibleModal(false);
+    }
     
     const bunList = ingredients.filter(ingredient => ingredient.type === "bun");
     const mainList = ingredients.filter(ingredient => ingredient.type === "main");
     const sauceList = ingredients.filter(ingredient => ingredient.type === "sauce");
 
     const modal = (data, count=0) => {
-        return ( 
-            <Ingredient
-                data={data}
-                count={count}/>
-        );
+        return ( <Ingredient data={data} count={count} onOpen={handleOpenModal}/> );
     }
     
     return(
@@ -57,6 +66,12 @@ export default function BurgerIngredients({ingredients}){
                 { mainList.map((data) => { return modal(data) }) }
 
             </div>
+            {
+                visibleModal && 
+                <Modal header={'Детали ингредиента'} onClose={handleCloseModal}>
+                    <IngredientDetails data={modalData}/>
+                </Modal>
+            }
 
         </div>
     );

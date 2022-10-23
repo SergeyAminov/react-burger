@@ -7,7 +7,7 @@ import modalStyle from './modal.module.css';
 
 const modals = document.getElementById("modals");
 
-export default function Modal({ children, header, onClose }){
+export default function Modal({ children, header='', onClose }){
     
     useEffect(() => {
         const closeOnEsc = (evt) => { if (evt.key === "Escape") onClose() };
@@ -31,7 +31,7 @@ export default function Modal({ children, header, onClose }){
 }
 
 Modal.propTypes = {
-    children: PropTypes.element,
-    header: PropTypes.string,
-    onClose: PropTypes.func
+    children: PropTypes.element.isRequired,
+    header: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired
 }
