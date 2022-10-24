@@ -29,7 +29,7 @@ export default function BurgerIngredients({ingredients}){
     const sauceList = ingredients.filter(ingredient => ingredient.type === "sauce");
 
     const modal = (data, count=0) => {
-        return ( <Ingredient data={data} count={count} onOpen={handleOpenModal}/> );
+        return ( <Ingredient key={data._id} data={data} count={count} handleOpenModal={handleOpenModal}/> );
     }
     
     return(
@@ -68,7 +68,7 @@ export default function BurgerIngredients({ingredients}){
             </div>
             {
                 visibleModal && 
-                <Modal header={'Детали ингредиента'} onClose={handleCloseModal}>
+                <Modal header={'Детали ингредиента'} handleCloseModal={handleCloseModal}>
                     <IngredientDetails data={modalData}/>
                 </Modal>
             }

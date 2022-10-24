@@ -7,24 +7,24 @@ import modalStyle from './modal.module.css';
 
 const modals = document.getElementById("modals");
 
-export default function Modal({ children, header='', onClose }){
+export default function Modal({ children, header='', handleCloseModal }){
     
     useEffect(() => {
-        const closeOnEsc = (evt) => { if (evt.key === "Escape") onClose() };
+        const closeOnEsc = (evt) => { if (evt.key === "Escape") handleCloseModal() };
         document.addEventListener("keyup", closeOnEsc);
         
         return () => {
         document.removeEventListener("keyup", closeOnEsc);
         }
-    }, [onClose]);
+    }, [handleCloseModal]);
     
     return ReactDOM.createPortal(
         <>
             <div className={modalStyle.modal}>
-                <ModalHeader onClose={onClose}>{header}</ModalHeader>
+                <ModalHeader handleCloseModal={handleCloseModal}>{header}</ModalHeader>
                 {children}
             </div>
-            <ModalOverlay onClose={onClose}/>
+            <ModalOverlay handleCloseModal={handleCloseModal}/>
         </>,
         modals
     );
@@ -33,5 +33,5 @@ export default function Modal({ children, header='', onClose }){
 Modal.propTypes = {
     children: PropTypes.element.isRequired,
     header: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired
+    handleCloseModal: PropTypes.func.isRequired
 }

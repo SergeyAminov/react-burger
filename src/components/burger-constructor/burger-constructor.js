@@ -24,7 +24,7 @@ export default function BurgerConstructor({ingredients}){
   ingredientList.forEach(ingredient => total+=ingredient.price);
 
   const modal = (
-    <Modal onClose={handleCloseModal} header={''}>
+    <Modal handleCloseModal={handleCloseModal} header={''}>
       <OrderDetails />
     </Modal>
   );

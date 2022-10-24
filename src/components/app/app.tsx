@@ -34,13 +34,11 @@ function App() {
       <main>
           {isLoading && <span className={`${appStyle.info} mt-2`}>Загрузка...</span>}
           {hasError && <span className={`${appStyle.info} mt-2`}>Произошла ошибка</span>}
-          {
-            !isLoading && !hasError && data.length && 
-            <BurgerIngredients ingredients={data}/>
-          }
-          {
-            !isLoading && !hasError && data.length && 
-            <BurgerConstructor ingredients={data}/>
+          { !isLoading && !hasError && data.length && 
+            <>
+              <BurgerIngredients ingredients={data}/>
+              <BurgerConstructor ingredients={data}/> 
+            </>
           }
       </main>
     </div>
