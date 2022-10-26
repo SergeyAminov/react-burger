@@ -1,0 +1,28 @@
+.modalHeader{
+    width: 640px;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.close{
+    font-size: 36px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close:hover{
+    cursor: pointer;
+}
+
+.header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 580px;
+    font-family: "JetBrains Mono";
+    font-size: 36px;
+    font-weight: 700;
+}

@@ -1,16 +1,33 @@
+import { useState } from 'react';
 import constructorStyle from "./burger-constructor.module.css";
+import PropTypes from 'prop-types';
+import ingredientType from "../../utils/types";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/my-modal";
+import OrderDetails from "../order-details/order-details";
 
-import ingredients from "../../utils/data";
+export default function BurgerConstructor({ingredients}){
+  const [visibleModal, setVisibleModal] = useState(false);
 
-export default function BurgerConstructor(){
+  const handleOpenModal = () => {
+    setVisibleModal(true);
+  }
+
+  const handleCloseModal = () => {
+    setVisibleModal(false);
+  }
 
   const lockedIngredient = ingredients[0];
   const ingredientList = [ingredients[3], ingredients[4], ingredients[7], ingredients[8],
-  ingredients[8], ingredients[10], ingredients[11], ingredients[12]];
-  
+    ingredients[8], ingredients[10], ingredients[11], ingredients[12]];
   let total = lockedIngredient.price * 2; 
   ingredientList.forEach(ingredient => total+=ingredient.price);
+
+  const modal = (
+    <Modal handleCloseModal={handleCloseModal} header={''}>
+      <OrderDetails />
+    </Modal>
+  );
 
   return (
     <div className={`${constructorStyle.constructorWrapper} mt-25`}>
@@ -61,10 +78,17 @@ export default function BurgerConstructor(){
           <span className="mr-2">{total}</span>
           <CurrencyIcon type="primary" />
         </span>
-        <Button htmlType="submit" type="primary" size="medium">
+        
+        <Button htmlType="submit" type="primary" size="medium" onClick={handleOpenModal}>
           Оформить заказ
         </Button>
+        {visibleModal && modal}
+        
       </div>
     </div>
   );
 }
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired
+};

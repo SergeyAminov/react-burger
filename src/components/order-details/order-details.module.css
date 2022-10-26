@@ -1,0 +1,38 @@
+.orderNumber{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 520px;
+    height: 120px;
+    font-family: "Iceland";
+    font-size: 144px;
+}
+
+.orderNumberLabel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 520px;
+    height: 30px;
+    font-family: "JetBrains Mono";
+    font-size: 24px;
+}
+
+.checkIcon{
+    width: 120px;
+    height: 120px;
+}
+
+.below{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 520px;
+    height: 24px;
+    font-family: "JetBrains Mono";
+    font-size: 16px;
+}
+
+.below2{
+    composes: below
+}
