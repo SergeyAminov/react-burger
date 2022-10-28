@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { OrderIngredientsContext, TotalPriceContext } from '../../services/appContext';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import AppHeader from '../app-header/app-header';
 import appStyle from './app.module.css';
@@ -8,6 +9,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [data, setData] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(2510);
+  const [orderIngredients, setOrderIngredients] = useState([]);
 
   useEffect(() => {
     const getIngredients = async () => {
@@ -36,8 +39,12 @@ function App() {
           {hasError && <span className={`${appStyle.info} mt-2`}>Произошла ошибка</span>}
           { !isLoading && !hasError && data.length && 
             <>
-              <BurgerIngredients ingredients={data}/>
-              <BurgerConstructor ingredients={data}/> 
+              <OrderIngredientsContext.Provider value={{ orderIngredients, setOrderIngredients }}>
+                <BurgerIngredients ingredients={data}/>
+                <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
+                  <BurgerConstructor bunData={data[0]}/> 
+                </TotalPriceContext.Provider>
+              </OrderIngredientsContext.Provider>
             </>
           }
       </main>

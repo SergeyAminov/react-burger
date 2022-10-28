@@ -1,14 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import constructorStyle from "./burger-constructor.module.css";
 import PropTypes from 'prop-types';
 import ingredientType from "../../utils/types";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/my-modal";
 import OrderDetails from "../order-details/order-details";
+import { OrderIngredientsContext, TotalPriceContext } from '../../services/appContext';
 
-export default function BurgerConstructor({ingredients}){
+export default function BurgerConstructor({bunData}){
   const [visibleModal, setVisibleModal] = useState(false);
+  const { totalPrice, setTotalPrice } = useContext(TotalPriceContext);
+  const { orderIngredients } = useContext(OrderIngredientsContext);
 
+  useEffect(() => {
+      let total = 2510;
+      orderIngredients.map(item => (total += item.price));
+      setTotalPrice(total);
+    },
+    [orderIngredients, setTotalPrice]
+  );
+ 
   const handleOpenModal = () => {
     setVisibleModal(true);
   }
@@ -16,12 +27,6 @@ export default function BurgerConstructor({ingredients}){
   const handleCloseModal = () => {
     setVisibleModal(false);
   }
-
-  const lockedIngredient = ingredients[0];
-  const ingredientList = [ingredients[3], ingredients[4], ingredients[7], ingredients[8],
-    ingredients[8], ingredients[10], ingredients[11], ingredients[12]];
-  let total = lockedIngredient.price * 2; 
-  ingredientList.forEach(ingredient => total+=ingredient.price);
 
   const modal = (
     <Modal handleCloseModal={handleCloseModal} header={''}>
@@ -39,34 +44,35 @@ export default function BurgerConstructor({ingredients}){
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${lockedIngredient.name} (верх)`}
-            price={lockedIngredient.price}
-            thumbnail={lockedIngredient.image}
+            text={`${bunData.name} (верх)`}
+            price={bunData.price}
+            thumbnail={bunData.image}
           />
         </div>
         
         <div className={constructorStyle.movableItems}>
           {
-            ingredientList.map((ingredient, index) => {
-              return <div key={index} className={constructorStyle.elementWrapper}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                          text={ingredient.name}
-                          price={ingredient.price}
-                          thumbnail={ingredient.image}
-                        />
-                      </div>
+            orderIngredients.map((ingredient, index) => {
+              return (
+                <div key={index} className={constructorStyle.elementWrapper}>
+                  <DragIcon type="primary" />
+                  <ConstructorElement
+                    text={ingredient.name}
+                    price={ingredient.price}
+                    thumbnail={ingredient.image}/>
+                </div>
+              );
             })
           }
         </div>
-
+  
         <div className={`${constructorStyle.lockedElementWrapper} mr-4`}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${lockedIngredient.name} (низ)`}
-            price={lockedIngredient.price}
-            thumbnail={lockedIngredient.image}
+            text={`${bunData.name} (низ)`}
+            price={bunData.price}
+            thumbnail={bunData.image}
           />
         </div>
       </div>
@@ -75,7 +81,7 @@ export default function BurgerConstructor({ingredients}){
       
       <div className={`${constructorStyle.order} mt-10 mr-4`}>
         <span className={`${constructorStyle.total} mr-10`}>
-          <span className="mr-2">{total}</span>
+          <span className="mr-2">{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </span>
         
@@ -90,5 +96,5 @@ export default function BurgerConstructor({ingredients}){
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired
+  bunData: PropTypes.shape(ingredientType)
 };
