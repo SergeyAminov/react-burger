@@ -9,7 +9,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [data, setData] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(2510);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [orderIngredients, setOrderIngredients] = useState([]);
 
   useEffect(() => {

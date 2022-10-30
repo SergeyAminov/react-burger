@@ -52,9 +52,9 @@ export default function BurgerConstructor({bunData}){
         
         <div className={constructorStyle.movableItems}>
           {
-            orderIngredients.map((ingredient, index) => {
+            orderIngredients.map((ingredient) => {
               return (
-                <div key={index} className={constructorStyle.elementWrapper}>
+                <div key={ingredient._id} className={constructorStyle.elementWrapper}>
                   <DragIcon type="primary" />
                   <ConstructorElement
                     text={ingredient.name}
