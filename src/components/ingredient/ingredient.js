@@ -7,15 +7,11 @@ import ingredientType from "../../utils/types";
 import ingredientStyle from "./ingredient.module.css";
 
 export default function Ingredient({data, count, handleOpenModal}){
-    const { orderIngredients, setOrderIngredients } = useContext(OrderIngredientsContext);
+    const { setOrderIngredients } = useContext(OrderIngredientsContext);
 
-    function addIngredient(ingredient){
-        if (ingredient.type !== 'bun'){
-            let ingredients = orderIngredients;
-            ingredients.push(ingredient);
-            setOrderIngredients(ingredients);
-        }
-        console.log("ing-s: ", orderIngredients);
+    const addIngredient = (ingredient) => {
+        if (ingredient.type !== 'bun')
+            setOrderIngredients(prevData => [...prevData, ingredient]);
     }
 
     return(
