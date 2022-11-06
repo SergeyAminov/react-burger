@@ -11,6 +11,9 @@ export default function BurgerConstructor({bunData}){
   const [visibleModal, setVisibleModal] = useState(false);
   const { totalPrice, setTotalPrice } = useContext(TotalPriceContext);
   const { orderIngredients } = useContext(OrderIngredientsContext);
+  const [orderNumber, setOrderNumber] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
       let total = 2510;
@@ -19,9 +22,31 @@ export default function BurgerConstructor({bunData}){
     },
     [orderIngredients, setTotalPrice]
   );
- 
-  const handleOpenModal = () => {
-    setVisibleModal(true);
+
+  const handleOrder = async () => {
+    try {
+      let ingredients = [`${bunData._id}`, `${bunData._id}`];
+      orderIngredients.forEach(element => {
+        ingredients.push(`${element._id}`);
+      });
+      setIsLoading(true);
+      setHasError(false);
+      const res = await fetch('https://norma.nomoreparties.space/api/orders', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({"ingredients": ingredients})
+      });
+      if (res.ok){
+        const data = await res.json();
+        setOrderNumber(data.order.number);
+        setIsLoading(false);
+        setVisibleModal(true);
+      }
+    } catch(err) {
+      setHasError(true);
+    }
   }
 
   const handleCloseModal = () => {
@@ -30,7 +55,7 @@ export default function BurgerConstructor({bunData}){
 
   const modal = (
     <Modal handleCloseModal={handleCloseModal} header={''}>
-      <OrderDetails />
+      <OrderDetails orderNumber={orderNumber}/>
     </Modal>
   );
 
@@ -85,10 +110,10 @@ export default function BurgerConstructor({bunData}){
           <CurrencyIcon type="primary" />
         </span>
         
-        <Button htmlType="submit" type="primary" size="medium" onClick={handleOpenModal}>
+        <Button htmlType="submit" type="primary" size="medium" onClick={handleOrder}>
           Оформить заказ
         </Button>
-        {visibleModal && modal}
+        { !isLoading && !hasError && visibleModal && modal}
         
       </div>
     </div>
