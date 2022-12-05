@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Ingredient from "../ingredient/ingredient";
 import Modal from "../modal/my-modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
-import ingredientType from "../../utils/types";
 import burgerIngredientsStyle from "./burger-ingredients.module.css";
+import { BurgerContext } from '../../services/appContext';
 
 /**
  * @description Компонент-обертка для всего перечня ингредиентов бургера. 
  */
-export default function BurgerIngredients({ingredients}){
+export default function BurgerIngredients(){
+    const { data } = useContext(BurgerContext);
     const [current, setCurrent] = useState('Булки');
     const [visibleModal, setVisibleModal] = useState(false);
     const [modalData, setModalData] = useState(null);
@@ -24,9 +24,9 @@ export default function BurgerIngredients({ingredients}){
         setVisibleModal(false);
     }
     
-    const bunList = ingredients.filter(ingredient => ingredient.type === "bun");
-    const mainList = ingredients.filter(ingredient => ingredient.type === "main");
-    const sauceList = ingredients.filter(ingredient => ingredient.type === "sauce");
+    const bunList = data.filter(ingredient => ingredient.type === "bun");
+    const mainList = data.filter(ingredient => ingredient.type === "main");
+    const sauceList = data.filter(ingredient => ingredient.type === "sauce");
 
     const modal = (data, count=0) => {
         return ( <Ingredient key={data._id} data={data} count={count} handleOpenModal={handleOpenModal}/> );
@@ -76,7 +76,3 @@ export default function BurgerIngredients({ingredients}){
         </div>
     );
 }
-
-BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired
-  };

@@ -5,9 +5,12 @@ import ingredientType from "../../utils/types";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/my-modal";
 import OrderDetails from "../order-details/order-details";
-import { OrderIngredientsContext, TotalPriceContext } from '../../services/appContext';
+import { BurgerContext, OrderIngredientsContext, TotalPriceContext } from '../../services/appContext';
+import { BASE_URL } from '../../services/constants';
+import request from '../../utils/request';
 
-export default function BurgerConstructor({bunData}){
+export default function BurgerConstructor(){
+  const { data } = useContext(BurgerContext);
   const [visibleModal, setVisibleModal] = useState(false);
   const { totalPrice, setTotalPrice } = useContext(TotalPriceContext);
   const { orderIngredients } = useContext(OrderIngredientsContext);
@@ -25,25 +28,25 @@ export default function BurgerConstructor({bunData}){
 
   const handleOrder = async () => {
     try {
-      let ingredients = [`${bunData._id}`, `${bunData._id}`];
+      let ingredients = [`${data[0]._id}`, `${data[0]._id}`];
       orderIngredients.forEach(element => {
         ingredients.push(`${element._id}`);
       });
       setIsLoading(true);
       setHasError(false);
-      const res = await fetch('https://norma.nomoreparties.space/api/orders', {
+
+      const options = {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({"ingredients": ingredients})
-      });
-      if (res.ok){
-        const data = await res.json();
-        setOrderNumber(data.order.number);
-        setIsLoading(false);
-        setVisibleModal(true);
       }
+      const res = await request(`${BASE_URL}/orders`, options);
+      setOrderNumber(res.order.number);
+      setIsLoading(false);
+      setVisibleModal(true);
+      
     } catch(err) {
       setHasError(true);
     }
@@ -59,6 +62,7 @@ export default function BurgerConstructor({bunData}){
     </Modal>
   );
 
+  const bunData = data[0];
   return (
     <div className={`${constructorStyle.constructorWrapper} mt-25`}>
       
