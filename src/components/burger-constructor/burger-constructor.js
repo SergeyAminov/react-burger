@@ -1,34 +1,68 @@
-import { useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import constructorStyle from "./burger-constructor.module.css";
 import PropTypes from 'prop-types';
 import ingredientType from "../../utils/types";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/my-modal";
 import OrderDetails from "../order-details/order-details";
+import { BurgerContext, OrderIngredientsContext, TotalPriceContext } from '../../services/appContext';
+import { BASE_URL } from '../../services/constants';
+import request from '../../utils/request';
 
-export default function BurgerConstructor({ingredients}){
+export default function BurgerConstructor(){
+  const { data } = useContext(BurgerContext);
   const [visibleModal, setVisibleModal] = useState(false);
+  const { totalPrice, setTotalPrice } = useContext(TotalPriceContext);
+  const { orderIngredients } = useContext(OrderIngredientsContext);
+  const [orderNumber, setOrderNumber] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
-  const handleOpenModal = () => {
-    setVisibleModal(true);
+  useEffect(() => {
+      let total = 2510;
+      orderIngredients.map(item => (total += item.price));
+      setTotalPrice(total);
+    },
+    [orderIngredients, setTotalPrice]
+  );
+
+  const handleOrder = async () => {
+    try {
+      let ingredients = [`${data[0]._id}`, `${data[0]._id}`];
+      orderIngredients.forEach(element => {
+        ingredients.push(`${element._id}`);
+      });
+      setIsLoading(true);
+      setHasError(false);
+
+      const options = {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({"ingredients": ingredients})
+      }
+      const res = await request(`${BASE_URL}/orders`, options);
+      setOrderNumber(res.order.number);
+      setIsLoading(false);
+      setVisibleModal(true);
+      
+    } catch(err) {
+      setHasError(true);
+    }
   }
 
   const handleCloseModal = () => {
     setVisibleModal(false);
   }
 
-  const lockedIngredient = ingredients[0];
-  const ingredientList = [ingredients[3], ingredients[4], ingredients[7], ingredients[8],
-    ingredients[8], ingredients[10], ingredients[11], ingredients[12]];
-  let total = lockedIngredient.price * 2; 
-  ingredientList.forEach(ingredient => total+=ingredient.price);
-
   const modal = (
     <Modal handleCloseModal={handleCloseModal} header={''}>
-      <OrderDetails />
+      <OrderDetails orderNumber={orderNumber}/>
     </Modal>
   );
 
+  const bunData = data[0];
   return (
     <div className={`${constructorStyle.constructorWrapper} mt-25`}>
       
@@ -39,34 +73,35 @@ export default function BurgerConstructor({ingredients}){
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${lockedIngredient.name} (верх)`}
-            price={lockedIngredient.price}
-            thumbnail={lockedIngredient.image}
+            text={`${bunData.name} (верх)`}
+            price={bunData.price}
+            thumbnail={bunData.image}
           />
         </div>
         
         <div className={constructorStyle.movableItems}>
           {
-            ingredientList.map((ingredient, index) => {
-              return <div key={index} className={constructorStyle.elementWrapper}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                          text={ingredient.name}
-                          price={ingredient.price}
-                          thumbnail={ingredient.image}
-                        />
-                      </div>
+            orderIngredients.map((ingredient) => {
+              return (
+                <div key={ingredient._id} className={constructorStyle.elementWrapper}>
+                  <DragIcon type="primary" />
+                  <ConstructorElement
+                    text={ingredient.name}
+                    price={ingredient.price}
+                    thumbnail={ingredient.image}/>
+                </div>
+              );
             })
           }
         </div>
-
+  
         <div className={`${constructorStyle.lockedElementWrapper} mr-4`}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${lockedIngredient.name} (низ)`}
-            price={lockedIngredient.price}
-            thumbnail={lockedIngredient.image}
+            text={`${bunData.name} (низ)`}
+            price={bunData.price}
+            thumbnail={bunData.image}
           />
         </div>
       </div>
@@ -75,14 +110,14 @@ export default function BurgerConstructor({ingredients}){
       
       <div className={`${constructorStyle.order} mt-10 mr-4`}>
         <span className={`${constructorStyle.total} mr-10`}>
-          <span className="mr-2">{total}</span>
+          <span className="mr-2">{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </span>
         
-        <Button htmlType="submit" type="primary" size="medium" onClick={handleOpenModal}>
+        <Button htmlType="submit" type="primary" size="medium" onClick={handleOrder}>
           Оформить заказ
         </Button>
-        {visibleModal && modal}
+        { !isLoading && !hasError && visibleModal && modal}
         
       </div>
     </div>
@@ -90,5 +125,5 @@ export default function BurgerConstructor({ingredients}){
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired
+  bunData: PropTypes.shape(ingredientType)
 };
